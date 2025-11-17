@@ -8,14 +8,15 @@ export const createReservationController = (reservationService: ReservationServi
 
   const createReservation = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { userId, caravanId, startDate, endDate } = req.body;
+      const { id, userId, caravanId, startDate, endDate } = req.body;
 
-      if (!userId || !caravanId || !startDate || !endDate) {
+      if (!id || !userId || !caravanId || !startDate || !endDate) {
         throw new BadRequestError('Missing required fields for reservation');
       }
 
       // Dates from JSON will be strings, so they need to be converted
       const reservation = await reservationService.createReservation(
+        id,
         userId,
         caravanId,
         new Date(startDate),

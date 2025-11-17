@@ -1,25 +1,23 @@
 // tests/repositories/UserRepository.test.ts
 
-import { UserRepository } from '../../repositories/UserRepository';
-import { User } from '../../models/User';
+import { UserRepository } from '../../src/repositories/UserRepository';
+import { User } from '../../src/models/User';
 
 describe('UserRepository', () => {
   let userRepository: UserRepository;
-  const user: User = {
-    id: 'user1',
-    username: 'testuser',
-    email: 'test@example.com',
-    password: 'password',
-    role: 'guest',
-    name: 'Test User',
-    contact: '123-456-7890',
-    rating: 0,
-    identityVerified: false,
-  };
+  const user = new User(
+    'user1',
+    'testuser',
+    'test@example.com',
+    'guest',
+    'Test User',
+    '123-456-7890',
+    'password'
+  );
 
   beforeEach(() => {
     userRepository = new UserRepository();
-    userRepository.create(user);
+    userRepository.add(user);
   });
 
   it('should create and find a user by id', () => {
@@ -33,14 +31,14 @@ describe('UserRepository', () => {
     expect(foundUser).toBeUndefined();
   });
 
-  it('should find a user by username', () => {
-    const foundUser = userRepository.findByUsername('testuser');
+  it('should find a user by email', () => {
+    const foundUser = userRepository.findByEmail('test@example.com');
     expect(foundUser).toBeDefined();
     expect(foundUser?.id).toBe('user1');
   });
 
-  it('should return undefined for a non-existent username', () => {
-    const foundUser = userRepository.findByUsername('nonexistent');
+  it('should return undefined for a non-existent email', () => {
+    const foundUser = userRepository.findByEmail('nonexistent@example.com');
     expect(foundUser).toBeUndefined();
   });
 
@@ -51,18 +49,16 @@ describe('UserRepository', () => {
   });
 
   it('should create a second user and find all', () => {
-    const user2: User = {
-      id: 'user2',
-      username: 'testuser2',
-      email: 'test2@example.com',
-      password: 'password',
-      role: 'host',
-      name: 'Test User 2',
-      contact: '123-456-7890',
-      rating: 0,
-      identityVerified: false,
-    };
-    userRepository.create(user2);
+    const user2 = new User(
+      'user2',
+      'testuser2',
+      'test2@example.com',
+      'host',
+      'Test User 2',
+      '123-456-7890',
+      'password'
+    );
+    userRepository.add(user2);
     const allUsers = userRepository.findAll();
     expect(allUsers).toHaveLength(2);
   });

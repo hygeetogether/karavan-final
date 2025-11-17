@@ -2,12 +2,12 @@
 
 import { Router } from 'express';
 import { createCaravanController } from '../controllers/CaravanController';
-import { caravanRepository, userRepository } from '../container';
+import { caravanService } from '../container';
 
 const router = Router();
 
 // Get dependencies from the container
-const caravanController = createCaravanController(caravanRepository, userRepository);
+const caravanController = createCaravanController(caravanService);
 
 router.post('/', caravanController.createCaravan);
 router.get('/', caravanController.getAllCaravans);

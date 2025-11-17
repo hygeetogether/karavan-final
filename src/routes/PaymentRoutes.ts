@@ -8,7 +8,7 @@ const router = Router();
 
 const paymentController = createPaymentController(paymentService);
 
-router.post('/', paymentController.processPayment);
+router.post('/', paymentController.createPayment);
 router.get('/history/:userId', paymentController.getPaymentHistory);
 
 export default router;

@@ -5,6 +5,9 @@ import { CaravanRepository } from './repositories/CaravanRepository';
 import { ReservationRepository } from './repositories/ReservationRepository';
 import { PaymentRepository } from './repositories/PaymentRepository';
 import { ReviewRepository } from './repositories/ReviewRepository';
+
+import { UserService } from './services/UserService';
+import { CaravanService } from './services/CaravanService';
 import { ReservationValidator } from './services/ReservationValidator';
 import { ReservationService } from './services/ReservationService';
 import { PaymentService } from './services/PaymentService';
@@ -18,6 +21,8 @@ export const paymentRepository = new PaymentRepository();
 export const reviewRepository = new ReviewRepository();
 
 // Create instances of services
+export const userService = new UserService(userRepository);
+export const caravanService = new CaravanService(caravanRepository, userRepository);
 export const reservationValidator = new ReservationValidator();
 export const reservationService = new ReservationService(
   reservationRepository,

@@ -8,9 +8,9 @@ export const createReviewController = (reviewService: ReviewService) => {
 
   const createReview = async (req: Request, res: Response, next: NextFunction) => {
     try {
-      const { reservationId, reviewerId, rating, comment } = req.body;
+      const { id, reservationId, reviewerId, revieweeId, rating, comment } = req.body;
 
-      if (!reservationId || !reviewerId || rating === undefined || !comment) {
+      if (!id || !reservationId || !reviewerId || !revieweeId || rating === undefined || !comment) {
         throw new BadRequestError('Missing required fields for review');
       }
 
@@ -18,7 +18,7 @@ export const createReviewController = (reviewService: ReviewService) => {
         throw new BadRequestError('Rating must be a number between 1 and 5');
       }
 
-      const review = await reviewService.createReview(reservationId, reviewerId, rating, comment);
+      const review = await reviewService.createReview(id, reservationId, reviewerId, revieweeId, rating, comment);
 
       res.status(201).json({ message: 'Review created successfully', review });
     } catch (error) {

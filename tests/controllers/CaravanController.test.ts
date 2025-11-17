@@ -1,32 +1,28 @@
 // tests/controllers/CaravanController.test.ts
 
-import { createCaravanController } from '../../controllers/CaravanController';
-import { CaravanRepository } from '../../repositories/CaravanRepository';
-import { UserRepository } from '../../repositories/UserRepository';
-import { User } from '../../models/User';
-import { Caravan } from '../../models/Caravan';
+import { createCaravanController } from '../../src/controllers/CaravanController';
+import { CaravanService } from '../../src/services/CaravanService';
+import { User } from '../../src/models/User';
+import { Caravan } from '../../src/models/Caravan';
 import { Request, Response, NextFunction } from 'express';
-import { BadRequestError, NotFoundError } from '../../errors/HttpErrors';
+import { BadRequestError, NotFoundError } from '../../src/errors/HttpErrors';
 
-jest.mock('../../repositories/CaravanRepository');
-jest.mock('../../repositories/UserRepository');
+jest.mock('../../src/services/CaravanService');
 
 describe('CaravanController', () => {
   let caravanController: ReturnType<typeof createCaravanController>;
-  let mockCaravanRepository: jest.Mocked<CaravanRepository>;
-  let mockUserRepository: jest.Mocked<UserRepository>;
+  let mockCaravanService: jest.Mocked<CaravanService>;
   let mockRequest: Partial<Request>;
   let mockResponse: Partial<Response>;
   let mockNext: NextFunction;
 
-  const hostUser: User = { id: 'host1', role: 'host', username: 'host', email: '', password: '', name: '', contact: '', rating: 0, identityVerified: true };
-  const guestUser: User = { id: 'guest1', role: 'guest', username: 'guest', email: '', password: '', name: '', contact: '', rating: 0, identityVerified: false };
-  const testCaravan: Caravan = { id: 'caravan1', hostId: 'host1', name: 'Test Caravan', capacity: 4, amenities: [], photos: [], location: { latitude: 0, longitude: 0 }, status: 'available', dailyRate: 100 };
+  const hostUser = new User('host1', 'host', 'host@test.com', 'host', 'Host', '123', 'pass');
+  const guestUser = new User('guest1', 'guest', 'guest@test.com', 'guest', 'Guest', '456', 'pass');
+  const testCaravan = new Caravan('caravan1', 'host1', 'Test Caravan', 4, [], [], { latitude: 0, longitude: 0 }, 100);
 
   beforeEach(() => {
-    mockCaravanRepository = new CaravanRepository() as jest.Mocked<CaravanRepository>;
-    mockUserRepository = new UserRepository() as jest.Mocked<UserRepository>;
-    caravanController = createCaravanController(mockCaravanRepository, mockUserRepository);
+    mockCaravanService = new (CaravanService as any)() as jest.Mocked<CaravanService>;
+    caravanController = createCaravanController(mockCaravanService);
 
     mockRequest = {};
     mockResponse = {
@@ -38,15 +34,14 @@ describe('CaravanController', () => {
 
   describe('createCaravan', () => {
     it('should create a caravan and return 201', async () => {
-      mockRequest.body = { hostId: 'host1', name: 'New Caravan', capacity: 2, amenities: ['wifi'], location: { lat: 1, lon: 1 }, dailyRate: 150 };
-      mockUserRepository.findById.mockReturnValue(hostUser);
+        mockRequest.body = { id: 'caravan2', hostId: 'host1', name: 'New Caravan', capacity: 2, amenities: ['wifi'], location: { lat: 1, lon: 1 }, dailyRate: 150 };
+        mockCaravanService.createCaravan.mockResolvedValue(testCaravan);
 
-      await caravanController.createCaravan(mockRequest as Request, mockResponse as Response, mockNext);
+        await caravanController.createCaravan(mockRequest as Request, mockResponse as Response, mockNext);
 
-      expect(mockUserRepository.findById).toHaveBeenCalledWith('host1');
-      expect(mockCaravanRepository.create).toHaveBeenCalled();
-      expect(mockResponse.status).toHaveBeenCalledWith(201);
-      expect(mockResponse.json).toHaveBeenCalledWith(expect.objectContaining({ message: 'Caravan created successfully' }));
+        expect(mockCaravanService.createCaravan).toHaveBeenCalledWith('caravan2', 'host1', 'New Caravan', 2, ['wifi'], [], { lat: 1, lon: 1 }, 150);
+        expect(mockResponse.status).toHaveBeenCalledWith(201);
+        expect(mockResponse.json).toHaveBeenCalledWith({ message: 'Caravan created successfully', caravan: testCaravan });
     });
 
     it('should call next with BadRequestError if fields are missing', async () => {
@@ -55,51 +50,46 @@ describe('CaravanController', () => {
       expect(mockNext).toHaveBeenCalledWith(new BadRequestError('Missing required fields for caravan creation'));
     });
 
-    it('should call next with NotFoundError if host does not exist', async () => {
-      mockRequest.body = { hostId: 'nonexistent', name: 'New Caravan', capacity: 2, amenities: [], location: {}, dailyRate: 150 };
-      mockUserRepository.findById.mockReturnValue(undefined);
-      await caravanController.createCaravan(mockRequest as Request, mockResponse as Response, mockNext);
-      expect(mockNext).toHaveBeenCalledWith(new NotFoundError('Host with ID nonexistent not found or is not a host'));
-    });
-
-    it('should call next with NotFoundError if user is not a host', async () => {
-        mockRequest.body = { hostId: 'guest1', name: 'New Caravan', capacity: 2, amenities: [], location: {}, dailyRate: 150 };
-        mockUserRepository.findById.mockReturnValue(guestUser);
+    it('should call next with an error if the service throws one', async () => {
+        const error = new NotFoundError('Host not found');
+        mockRequest.body = { id: 'c1', hostId: 'nonexistent', name: 'New Caravan', capacity: 2, amenities: [], location: {}, dailyRate: 150 };
+        mockCaravanService.createCaravan.mockRejectedValue(error);
         await caravanController.createCaravan(mockRequest as Request, mockResponse as Response, mockNext);
-        expect(mockNext).toHaveBeenCalledWith(new NotFoundError('Host with ID guest1 not found or is not a host'));
+        expect(mockNext).toHaveBeenCalledWith(error);
     });
   });
 
   describe('getCaravanById', () => {
     it('should return a caravan and status 200 if found', async () => {
         mockRequest.params = { id: 'caravan1' };
-        mockCaravanRepository.findById.mockReturnValue(testCaravan);
+        mockCaravanService.getCaravanById.mockResolvedValue(testCaravan);
 
         await caravanController.getCaravanById(mockRequest as Request, mockResponse as Response, mockNext);
 
-        expect(mockCaravanRepository.findById).toHaveBeenCalledWith('caravan1');
+        expect(mockCaravanService.getCaravanById).toHaveBeenCalledWith('caravan1');
         expect(mockResponse.status).toHaveBeenCalledWith(200);
         expect(mockResponse.json).toHaveBeenCalledWith(testCaravan);
     });
 
     it('should call next with NotFoundError if caravan is not found', async () => {
+        const error = new NotFoundError('Caravan not found');
         mockRequest.params = { id: 'nonexistent' };
-        mockCaravanRepository.findById.mockReturnValue(undefined);
+        mockCaravanService.getCaravanById.mockRejectedValue(error);
 
         await caravanController.getCaravanById(mockRequest as Request, mockResponse as Response, mockNext);
 
-        expect(mockNext).toHaveBeenCalledWith(new NotFoundError('Caravan with ID nonexistent not found'));
+        expect(mockNext).toHaveBeenCalledWith(error);
     });
   });
 
   describe('getAllCaravans', () => {
     it('should return an array of caravans and status 200', async () => {
         const caravans = [testCaravan];
-        mockCaravanRepository.findAll.mockReturnValue(caravans);
+        mockCaravanService.getAllCaravans.mockResolvedValue(caravans);
 
         await caravanController.getAllCaravans(mockRequest as Request, mockResponse as Response, mockNext);
 
-        expect(mockCaravanRepository.findAll).toHaveBeenCalled();
+        expect(mockCaravanService.getAllCaravans).toHaveBeenCalled();
         expect(mockResponse.status).toHaveBeenCalledWith(200);
         expect(mockResponse.json).toHaveBeenCalledWith(caravans);
     });
