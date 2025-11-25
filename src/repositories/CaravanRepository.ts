@@ -1,5 +1,5 @@
 import prisma from '../lib/prisma';
-import { Caravan, CaravanStatus } from '../models/caravan';
+import { Caravan, CaravanStatus } from '../models/Caravan';
 
 export class CaravanRepository {
   async add(caravan: Caravan): Promise<void> {

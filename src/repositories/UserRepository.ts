@@ -1,5 +1,5 @@
 import prisma from '../lib/prisma';
-import { User, Role } from '../models/user';
+import { User, Role } from '../models/User';
 
 export class UserRepository {
   async add(user: User): Promise<void> {

@@ -1,167 +1,99 @@
-# CaravanShare 앱 배포 가이드 (AWS EC2)
+# CaravanShare 배포 가이드 (Docker on EC2)
 
-이 문서는 CaravanShare 백엔드 애플리케이션을 AWS EC2(Ubuntu 22.04) 환경에 배포하고, Nginx를 이용한 리버스 프록시와 Let's Encrypt를 통해 HTTPS를 적용하는 과정을 안내합니다. (Level 2 배포)
+이 문서는 CaravanShare 애플리케이션을 Docker와 Docker Compose를 사용하여 AWS EC2에 배포하는 방법을 안내합니다.
 
-## 목차
-1. [1단계: AWS EC2 인스턴스 준비](#1단계-aws-ec2-인스턴스-준비)
-2. [2단계: 서버 환경 설정](#2단계-서버-환경-설정)
-3. [3단계: 애플리케이션 배포](#3단계-애플리케이션-배포)
-4. [4단계: Nginx 리버스 프록시 및 HTTPS 설정](#4단계-nginx-리버스-프록시-및-https-설정)
+## 1. EC2 인스턴스 준비
 
----
+1.  **인스턴스 생성**:
+    *   OS: Ubuntu Server 22.04 LTS (또는 20.04)
+    *   인스턴스 유형: t2.micro (프리 티어) 또는 t3.small (권장)
+    *   스토리지: 8GB 이상 (20GB 권장)
 
-### 1단계: AWS EC2 인스턴스 준비
+2.  **보안 그룹(방화벽) 설정**:
+    *   인바운드 규칙에 다음 포트를 허용합니다.
+        *   `SSH` (22): 내 IP에서만 허용 (보안 권장)
+        *   `HTTP` (80): 위치 무방 (0.0.0.0/0)
+        *   `HTTPS` (443): 위치 무방 (0.0.0.0/0) - *추후 HTTPS 적용 시 필요*
 
-1.  **EC2 인스턴스 생성**
-    *   AWS Management Console에 로그인하여 EC2 서비스로 이동합니다.
-    *   "인스턴스 시작"을 클릭합니다.
-    *   **이름:** `caravan-server` 등 식별 가능한 이름을 입력합니다.
-    *   **AMI 선택:** `Ubuntu Server 22.04 LTS`를 선택합니다.
-    *   **인스턴스 유형:** `t2.micro` (프리 티어)를 선택합니다.
-    *   **키 페어:** 새 키 페어를 생성하거나 기존 키 페어를 사용합니다. **(중요: 생성된 `.pem` 파일은 안전한 곳에 보관해야 합니다.)**
-    *   **네트워크 설정:**
-        *   "보안 그룹 생성"을 선택합니다.
-        *   인바운드 규칙에 다음 3가지를 추가하거나 확인합니다.
-            *   `SSH` (포트 22): 내 IP에서 접속하도록 설정하는 것을 권장합니다.
-            *   `HTTP` (포트 80): 위치 무방 (Anywhere)
-            *   `HTTPS` (포트 443): 위치 무방 (Anywhere)
-    *   "인스턴스 시작"을 클릭하여 인스턴스를 생성합니다.
+## 2. 서버 접속 및 환경 설정
 
-2.  **탄력적 IP 주소 할당 (선택 사항, 권장)**
-    *   EC2 대시보드의 "탄력적 IP" 메뉴로 이동하여 새 주소를 할당받습니다.
-    *   방금 생성한 EC2 인스턴스에 이 IP 주소를 연결합니다. 이렇게 하면 인스턴스를 재시작해도 Public IP가 변경되지 않습니다.
+터미널(또는 PowerShell)에서 SSH로 서버에 접속합니다.
 
----
+```bash
+ssh -i "path/to/your-key.pem" ubuntu@<EC2_PUBLIC_IP>
+```
 
-### 2단계: 서버 환경 설정
+접속 후, 다음 명령어로 필수 패키지를 설치하고 설정을 진행합니다.
 
-1.  **SSH로 서버에 접속**
-    *   다운로드한 `.pem` 키 파일을 사용하여 터미널에서 아래 명령어로 서버에 접속합니다.
-    ```bash
-    # .pem 파일에 올바른 권한 부여
-    chmod 400 /path/to/your-key.pem
+```bash
+# 1. 시스템 업데이트
+sudo apt-get update && sudo apt-get upgrade -y
 
-    # SSH 접속 (your-public-ip를 실제 IP 주소로 변경)
-    ssh -i /path/to/your-key.pem ubuntu@your-public-ip
-    ```
+# 2. Docker 설치
+sudo apt-get install -y docker.io docker-compose
 
-2.  **서버 패키지 업데이트**
-    ```bash
-    sudo apt update
-    sudo apt upgrade -y
-    ```
+# 3. Docker 권한 설정 (sudo 없이 docker 명령어 사용)
+sudo usermod -aG docker ubuntu
+# (설정 적용을 위해 로그아웃 후 다시 로그인하거나 다음 명령어 실행)
+newgrp docker
 
-3.  **필수 프로그램 설치 (Git, Nginx)**
-    ```bash
-    sudo apt install -y git nginx
-    ```
+# 4. Git 설치
+sudo apt-get install -y git
+```
 
-4.  **Node.js 및 PM2 설치**
-    *   `nvm`(Node Version Manager)을 사용하여 Node.js를 설치합니다.
-    ```bash
-    # nvm 설치 스크립트 다운로드 및 실행
-    curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.7/install.sh | bash
+## 3. 애플리케이션 배포
 
-    # nvm 환경 변수 적용
-    export NVM_DIR="$HOME/.nvm"
-    [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
-    [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"
+```bash
+# 1. 프로젝트 클론
+git clone https://github.com/hygeetogether/karaban.git
+cd karaban
 
-    # 터미널 재시작 없이 nvm 명령어 사용을 위해 source 실행
-    source ~/.bashrc
+# 2. 환경 변수 설정
+cp .env.example .env
+# (필요시 .env 수정: vi .env)
 
-    # Node.js LTS 버전 설치 (v18.x.x)
-    nvm install --lts
-    ```
-    *   `pm2`를 전역으로 설치합니다.
-    ```bash
-    npm install -g pm2
-    ```
+# 3. Docker Compose로 실행 (빌드 및 백그라운드 실행)
+docker-compose up -d --build
+```
 
----
+## 4. 배포 확인 및 관리
 
-### 3단계: 애플리케이션 배포
+```bash
+# 실행 중인 컨테이너 확인
+docker-compose ps
 
-1.  **프로젝트 클론**
-    *   GitHub 저장소에서 프로젝트 코드를 가져옵니다.
-    ```bash
-    git clone https://github.com/hygeetogether/karaban.git
-    cd karaban
-    ```
+# 로그 확인 (전체)
+docker-compose logs -f
 
-2.  **의존성 설치 및 빌드**
-    ```bash
-    npm install
-    npm run build
-    ```
+# 로그 확인 (특정 서비스, 예: backend)
+docker-compose logs -f backend
+```
 
-3.  **환경 변수 파일 생성**
-    *   `.env.example` 파일을 복사하여 `.env` 파일을 생성합니다.
-    ```bash
-    cp .env.example .env
-    ```
-    *   필요시 `vim`이나 `nano` 편집기로 `.env` 파일의 `PORT` 등을 수정할 수 있습니다. (기본값: 3001)
+브라우저에서 `http://<EC2_PUBLIC_IP>`로 접속하여 확인합니다.
 
-4.  **PM2로 애플리케이션 실행**
-    ```bash
-    npm run start
-    ```
-    *   **실행 확인:** `pm2 list` 명령어로 `caravan-app`이 `online` 상태인지 확인합니다.
-    *   **로그 확인:** `pm2 logs caravan-app` 명령어로 실시간 로그를 볼 수 있습니다.
+## 5. 데이터베이스 관리
 
----
+배포 후 데이터베이스 마이그레이션이 필요할 수 있습니다. (docker-compose.yml에 자동 실행 명령이 포함되어 있지만, 수동으로 실행해야 할 경우)
 
-### 4단계: Nginx 리버스 프록시 및 HTTPS 설정
+```bash
+# 마이그레이션 실행
+docker-compose exec backend npx prisma migrate deploy
 
-1.  **Nginx 설정 파일 생성**
-    *   Nginx의 설정 파일을 생성하고 편집합니다.
-    ```bash
-    sudo vim /etc/nginx/sites-available/caravan
-    ```
-    *   아래 내용을 붙여넣습니다. `your_domain.com` 부분은 실제 도메인 주소로 변경해야 합니다. 만약 도메인이 없다면, 이 부분은 EC2의 Public IP 주소로 대체할 수 있습니다.
-    ```nginx
-    server {
-        listen 80;
-        server_name your_domain.com; # 또는 EC2의 Public IP 주소
+# 시드 데이터 주입 (초기 데이터)
+docker-compose exec backend npm run seed
+```
 
-        location / {
-            proxy_pass http://localhost:3001; # Node.js 앱이 실행 중인 포트
-            proxy_http_version 1.1;
-            proxy_set_header Upgrade $http_upgrade;
-            proxy_set_header Connection 'upgrade';
-            proxy_set_header Host $host;
-            proxy_cache_bypass $http_upgrade;
-        }
-    }
-    ```
+## 6. 애플리케이션 업데이트
 
-2.  **Nginx 설정 활성화**
-    ```bash
-    # 기존 기본 설정 링크 제거
-    sudo rm /etc/nginx/sites-enabled/default
+코드가 업데이트되었을 때 다음 절차로 배포를 갱신합니다.
 
-    # 새로 만든 설정 파일 링크 생성
-    sudo ln -s /etc/nginx/sites-available/caravan /etc/nginx/sites-enabled/
+```bash
+# 1. 최신 코드 가져오기
+git pull
 
-    # Nginx 설정 문법 오류 확인
-    sudo nginx -t
+# 2. 다시 빌드하고 실행 (변경된 부분만 다시 빌드됨)
+docker-compose up -d --build
 
-    # Nginx 재시작
-    sudo systemctl restart nginx
-    ```
-    *   이제 도메인 주소나 IP 주소로 접속하면 애플리케이션이 보여야 합니다.
-
-3.  **HTTPS 적용 (Let's Encrypt & Certbot)**
-    *   **주의:** 이 단계는 **도메인 주소가 EC2 인스턴스의 IP를 가리키고 있을 때만** 가능합니다.
-    *   Certbot을 설치합니다.
-    ```bash
-    sudo apt install -y certbot python3-certbot-nginx
-    ```
-    *   Certbot을 실행하여 SSL 인증서를 발급받고 Nginx에 자동으로 설정합니다.
-    ```bash
-    # your_domain.com을 실제 도메인으로 변경
-    sudo certbot --nginx -d your_domain.com
-    ```
-    *   Certbot이 이메일 주소, 서비스 약관 동의 등을 물어봅니다. 안내에 따라 진행하면 자동으로 HTTPS 설정이 완료되고, 인증서 자동 갱신까지 설정됩니다.
-
-이제 `https://your_domain.com`으로 접속하면 안전한 HTTPS 연결로 애플리케이션을 사용할 수 있습니다.
+# 3. 불필요한 이미지 정리 (선택 사항)
+docker image prune -f
+```

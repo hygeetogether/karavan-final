@@ -1,4 +1,4 @@
-import { Review } from '../models/review';
+import { Review } from '../models/Review';
 import { ReviewRepository } from '../repositories/ReviewRepository';
 import { ReservationRepository } from '../repositories/ReservationRepository';
 import { UserRepository } from '../repositories/UserRepository';

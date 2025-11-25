@@ -2,7 +2,7 @@
 
 import { ReservationValidator } from '../../src/services/ReservationValidator';
 import { ReservationRepository } from '../../src/repositories/ReservationRepository';
-import { Reservation } from '../../src/models/reservation';
+import { Reservation } from '../../src/models/Reservation';
 
 jest.mock('../../src/repositories/ReservationRepository');
 jest.mock('../../src/lib/prisma', () => ({

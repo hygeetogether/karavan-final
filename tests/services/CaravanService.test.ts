@@ -3,8 +3,8 @@
 import { CaravanService } from '../../src/services/CaravanService';
 import { CaravanRepository } from '../../src/repositories/CaravanRepository';
 import { UserRepository } from '../../src/repositories/UserRepository';
-import { Caravan, CaravanStatus } from '../../src/models/caravan';
-import { User, Role } from '../../src/models/user';
+import { Caravan, CaravanStatus } from '../../src/models/Caravan';
+import { User, Role } from '../../src/models/User';
 
 jest.mock('../../src/repositories/CaravanRepository');
 jest.mock('../../src/repositories/UserRepository');

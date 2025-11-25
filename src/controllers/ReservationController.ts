@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
 import { ReservationService } from '../services/ReservationService';
-import { Reservation } from '../models/reservation';
+import { Reservation } from '../models/Reservation';
 
 export class ReservationController {
   constructor(private service: ReservationService) { }

@@ -28,3 +28,9 @@ jobs:
       
     - name: Run Tests
       run: npm test
+
+    - name: Verify Backend Docker Build
+      run: docker build -t karaban-backend .
+
+    - name: Verify Frontend Docker Build
+      run: docker build -t karaban-frontend ./frontend

@@ -1,5 +1,5 @@
 import prisma from '../lib/prisma';
-import { Reservation, ReservationStatus } from '../models/reservation';
+import { Reservation, ReservationStatus } from '../models/Reservation';
 
 export class ReservationRepository {
   async add(reservation: Reservation): Promise<void> {

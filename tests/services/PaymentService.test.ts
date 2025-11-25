@@ -4,8 +4,8 @@ import { PaymentService } from '../../src/services/PaymentService';
 import { PaymentRepository } from '../../src/repositories/PaymentRepository';
 import { ReservationRepository } from '../../src/repositories/ReservationRepository';
 import { UserRepository } from '../../src/repositories/UserRepository';
-import { Reservation } from '../../src/models/reservation';
-import { User } from '../../src/models/user';
+import { Reservation } from '../../src/models/Reservation';
+import { User } from '../../src/models/User';
 
 jest.mock('../../src/repositories/PaymentRepository');
 jest.mock('../../src/repositories/ReservationRepository');

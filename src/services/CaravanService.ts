@@ -1,4 +1,4 @@
-import { Caravan } from '../models/caravan';
+import { Caravan } from '../models/Caravan';
 import { CaravanRepository } from '../repositories/CaravanRepository';
 import { UserRepository } from '../repositories/UserRepository';
 import { NotFoundError } from '../errors/HttpErrors';

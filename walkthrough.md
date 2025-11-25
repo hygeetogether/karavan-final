@@ -31,7 +31,7 @@ CaravanShare is a fully functional MVP for a peer-to-peer caravan sharing platfo
 
 - **Backend**: Node.js, Express, TypeScript, Prisma ORM.
 - **Frontend**: React, TypeScript, Vite, CSS Modules, Leaflet.
-- **Database**: SQLite (Dev), ready for PostgreSQL (Prod).
+- **Database**: PostgreSQL (configured in Docker/Prisma).
 - **Deployment**: Dockerized (Frontend + Backend + DB) with Nginx reverse proxy.
 - **CI/CD**: GitHub Actions workflow for automated testing.
 

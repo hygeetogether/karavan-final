@@ -1,5 +1,5 @@
 import prisma from '../lib/prisma';
-import { Payment, PaymentStatus } from '../models/payment';
+import { Payment, PaymentStatus } from '../models/Payment';
 
 export class PaymentRepository {
   async add(payment: Payment): Promise<void> {

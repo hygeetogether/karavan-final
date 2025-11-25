@@ -5,31 +5,48 @@ services:
     build: ./frontend
     ports:
       - "80:80"
+    restart: always
     depends_on:
-      - backend
+      backend:
+        condition: service_healthy
 
   backend:
     build: .
     ports:
       - "3001:3001"
+    restart: always
     environment:
       - PORT=3001
       - NODE_ENV=production
       - DATABASE_URL=postgresql://postgres:password@db:5432/caravanshare?schema=public
-    command: sh -c "npx prisma migrate deploy && npm start"
+    # PM2 대신 start:prod (node 직접 실행) 사용 및 마이그레이션 실행
+    command: sh -c "npx prisma migrate deploy && npm run start:prod"
     depends_on:
-      - db
+      db:
+        condition: service_healthy
+    healthcheck:
+      test: [ "CMD", "wget", "--spider", "-q", "http://localhost:3001/health" ]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
 
   db:
     image: postgres:15-alpine
     ports:
       - "5432:5432"
+    restart: always
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
       - POSTGRES_DB=caravanshare
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U postgres" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
 volumes:
   postgres_data:

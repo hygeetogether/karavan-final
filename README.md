@@ -102,9 +102,11 @@ Render provides free hosting with PostgreSQL database included.
 - Frontend: `https://karaban-frontend.onrender.com`
 - Backend: `https://karaban-backend.onrender.com`
 
-### Deploy to AWS EC2 (Advanced)
+### Deploy to AWS EC2 (Docker)
+For production deployment on AWS EC2 using Docker, see the detailed [DEPLOYMENT.md](./DEPLOYMENT.md) guide. This is the recommended approach for full control.
 
-For manual AWS EC2 deployment, see [DEPLOYMENT.md](./DEPLOYMENT.md)
+### Deploy to Render (Cloud Platform)
+For quick cloud deployment without managing servers, see [RENDER_SETUP.md](./RENDER_SETUP.md).
 
 ## Project Structure
 

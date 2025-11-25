@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import client from '../api/client';
 import '../styles/CaravanListPage.css'; // Reuse styles for now
-import { Calendar, MapPin } from 'lucide-react';
+import { Calendar } from 'lucide-react';
 
 interface Reservation {
     id: number;

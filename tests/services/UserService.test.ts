@@ -2,7 +2,7 @@
 
 import { UserService } from '../../src/services/UserService';
 import { UserRepository } from '../../src/repositories/UserRepository';
-import { User } from '../../src/models/user';
+import { User } from '../../src/models/User';
 
 jest.mock('../../src/repositories/UserRepository');
 jest.mock('../../src/lib/prisma', () => ({

@@ -1,4 +1,4 @@
-import { Reservation } from '../models/reservation';
+import { Reservation } from '../models/Reservation';
 import { ReservationRepository } from '../repositories/ReservationRepository';
 import { ReservationValidator } from './ReservationValidator';
 

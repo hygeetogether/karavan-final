@@ -5,7 +5,7 @@ import { ReviewRepository } from '../../src/repositories/ReviewRepository';
 import { ReservationRepository } from '../../src/repositories/ReservationRepository';
 import { UserRepository } from '../../src/repositories/UserRepository';
 import { CaravanRepository } from '../../src/repositories/CaravanRepository';
-import { Reservation } from '../../src/models/reservation';
+import { Reservation } from '../../src/models/Reservation';
 
 jest.mock('../../src/repositories/ReviewRepository');
 jest.mock('../../src/repositories/ReservationRepository');

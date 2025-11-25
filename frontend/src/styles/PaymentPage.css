@@ -1,0 +1,28 @@
+.payment-page {
+    padding-top: 80px;
+    min-height: 100vh;
+    background-color: #f7f7f7;
+    display: flex;
+    justify-content: center;
+}
+
+.payment-card {
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    overflow: hidden;
+}
+
+.form-control:focus {
+    outline: none;
+    border-color: #222;
+}
+
+.btn-primary:hover {
+    background-color: #d9324e !important;
+}
+
+.btn-primary:disabled {
+    background-color: #ffb0b0 !important;
+    cursor: not-allowed;
+}

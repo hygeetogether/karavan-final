@@ -1,5 +1,5 @@
 import prisma from '../lib/prisma';
-import { Review } from '../models/review';
+import { Review } from '../models/Review';
 
 export class ReviewRepository {
   async add(review: Review): Promise<void> {

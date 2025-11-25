@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { reviewService, Review } from '../services/reviewService';
+import { reviewService, type Review } from '../services/reviewService';
 import { Star } from 'lucide-react';
 
 interface ReviewListProps {

@@ -3,7 +3,7 @@
 import { ReservationService } from '../../src/services/ReservationService';
 import { ReservationRepository } from '../../src/repositories/ReservationRepository';
 import { ReservationValidator } from '../../src/services/ReservationValidator';
-import { Reservation } from '../../src/models/reservation';
+import { Reservation } from '../../src/models/Reservation';
 
 jest.mock('../../src/repositories/ReservationRepository');
 jest.mock('../../src/services/ReservationValidator');

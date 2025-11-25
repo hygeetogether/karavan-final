@@ -1,5 +1,5 @@
-import { Payment } from '../models/payment';
-import { ReservationStatus } from '../models/reservation';
+import { Payment } from '../models/Payment';
+import { ReservationStatus } from '../models/Reservation';
 import { PaymentRepository } from '../repositories/PaymentRepository';
 import { ReservationRepository } from '../repositories/ReservationRepository';
 import { UserRepository } from '../repositories/UserRepository';
