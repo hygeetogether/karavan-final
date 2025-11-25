@@ -13,6 +13,10 @@
 | :---: | :---: | :---: |
 | ![Landing Page](./docs/images/landing_page.png) | ![Listing Page](./docs/images/listing_page.png) | ![Detail Page](./docs/images/detail_page.png) |
 
+| 지도 검색 (Map Search) | 결제 시스템 (Payment) | |
+| :---: | :---: | :---: |
+| ![Map Interface](./docs/images/map_interface.png) | ![Payment Checkout](./docs/images/payment_checkout.png) | |
+
 ## �📖 목차
 
 1. [Why Karavan? (기획 배경 및 문제 해결)](#-why-karavan-기획-배경-및-문제-해결)
