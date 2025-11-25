@@ -1,138 +1,151 @@
-# CaravanShare (카라반쉐어)
+# Karavan (카라반) - 프리미엄 P2P 카라반 공유 플랫폼
 
-CaravanShare는 사용자가 자신의 카라반을 등록하고, 다른 사용자가 모험을 위해 이를 예약할 수 있는 P2P 카라반 공유 플랫폼입니다.
+![Karavan Banner](https://via.placeholder.com/1200x400?text=Karavan+Share+Platform)
 
-## 주요 기능
+**Karavan**은 여행을 사랑하는 사람들을 위한 **프리미엄 P2P 카라반 공유 플랫폼**입니다.
+유휴 카라반을 소유한 호스트와 특별한 캠핑 경험을 찾는 게스트를 연결하여, 언제 어디서나 자유로운 모험을 즐길 수 있도록 돕습니다.
 
-- **사용자 계정**: 게스트(Guest) 또는 호스트(Host)로 가입할 수 있습니다.
-- **카라반 등록**: 호스트는 사진, 편의시설, 가격 정보와 함께 카라반을 등록할 수 있습니다.
-- **검색 및 필터**: 게스트는 위치와 가격 범위를 기준으로 카라반을 검색할 수 있습니다.
-- **예약 시스템**: 게스트는 특정 날짜에 카라반을 예약할 수 있습니다.
-- **결제 시스템**: 예약을 확정하기 위한 모의 결제(Mock Payment) 기능이 통합되어 있습니다.
-- **리뷰 및 평점**: 게스트는 이용 후 카라반에 대한 리뷰와 평점을 남길 수 있습니다.
+---
 
-## 기술 스택
+## 📖 목차
 
-- **백엔드**: Node.js, Express, TypeScript, Prisma, PostgreSQL
-- **프론트엔드**: React, TypeScript, Vite, CSS Modules
-- **테스트**: Jest (Backend)
-- **배포**: Docker, AWS EC2 (권장), Render
+1. [프로젝트 소개](#-프로젝트-소개)
+2. [주요 기능](#-주요-기능)
+3. [독보적인 기술 차별화](#-독보적인-기술-차별화)
+4. [기술 스택](#-기술-스택)
+5. [설치 및 실행 방법](#-설치-및-실행-방법)
+6. [배포 가이드](#-배포-가이드)
+7. [프로젝트 구조](#-프로젝트-구조)
 
-## 시작하기 (Getting Started)
+---
+
+## 📝 프로젝트 소개
+
+캠핑과 아웃도어 활동의 인기가 높아짐에 따라 카라반에 대한 수요도 급증하고 있습니다. 하지만 카라반 구매 비용과 유지 관리의 어려움은 진입 장벽이 됩니다.
+**Karavan**은 이러한 문제를 해결하기 위해 탄생했습니다.
+
+- **게스트**는 고가의 장비 구매 없이 합리적인 가격으로 카라반 라이프를 경험할 수 있습니다.
+- **호스트**는 사용하지 않는 기간 동안 카라반을 대여하여 수익을 창출할 수 있습니다.
+
+우리는 단순한 대여를 넘어, **신뢰할 수 있는 커뮤니티**와 **직관적인 사용자 경험**을 제공하는 것을 목표로 합니다.
+
+---
+
+## ✨ 주요 기능
+
+### 1. 사용자 맞춤형 경험
+- **역할 기반 시스템**: 하나의 계정으로 게스트와 호스트 모드를 자유롭게 전환할 수 있습니다.
+- **간편 로그인**: 복잡한 절차 없는 직관적인 인증 프로세스를 제공합니다.
+
+### 2. 스마트한 카라반 탐색
+- **직관적인 지도 검색**: Leaflet 기반의 대화형 지도를 통해 원하는 지역의 카라반을 한눈에 찾을 수 있습니다.
+- **상세 필터링**: 위치, 가격 범위, 편의시설 등 다양한 조건으로 최적의 카라반을 검색합니다.
+
+### 3. 안전하고 편리한 예약 시스템
+- **실시간 예약 가능 여부 확인**: 중복 예약을 원천 차단하는 스마트 캘린더 시스템.
+- **투명한 가격 정책**: 숨겨진 비용 없이 총 대여료를 즉시 계산하여 보여줍니다.
+- **모의 결제 시스템**: 안전한 결제 흐름을 시뮬레이션하여 사용자 경험을 완성합니다.
+
+### 4. 신뢰 기반 커뮤니티
+- **리뷰 및 평점**: 실제 이용자만 작성 가능한 클린 리뷰 시스템으로 신뢰도를 높입니다.
+- **호스트 프로필**: 호스트의 정보를 투명하게 공개하여 안심하고 예약할 수 있습니다.
+
+---
+
+## 🚀 독보적인 기술 차별화
+
+Karavan 프로젝트는 단순한 기능 구현을 넘어, **확장성**과 **안정성**을 고려한 엔지니어링 원칙을 따릅니다.
+
+### 1. Type-Safe End-to-End 아키텍처
+- **Full TypeScript**: 프론트엔드부터 백엔드까지 **100% TypeScript**를 적용하여, 컴파일 단계에서 런타임 오류를 사전에 방지하고 개발 생산성을 극대화했습니다.
+- **일관된 데이터 모델**: Prisma ORM을 통해 데이터베이스 스키마와 애플리케이션 타입의 완벽한 동기화를 유지합니다.
+
+### 2. 프로덕션 레벨의 Docker 컨테이너화
+- **Microservices-Ready**: 프론트엔드(Nginx), 백엔드(Node.js), 데이터베이스(PostgreSQL)가 각각 독립적인 컨테이너로 구성되어 있어, 향후 마이크로서비스 아키텍처(MSA)로의 확장이 용이합니다.
+- **최적화된 빌드**: Multi-stage 빌드 전략을 사용하여 프로덕션 이미지의 크기를 최소화하고 보안을 강화했습니다.
+
+### 3. 견고한 계층형 아키텍처 (Layered Architecture)
+- **관심사의 분리**: `Controller` - `Service` - `Repository` 패턴을 철저히 준수하여 비즈니스 로직과 데이터 접근 계층을 분리했습니다. 이는 코드의 **유지보수성**과 **테스트 용이성**을 획기적으로 높여줍니다.
+- **의존성 주입 (DI)**: 유닛 테스트 시 모의 객체(Mock) 주입을 용이하게 하여 테스트 커버리지를 안정적으로 확보했습니다.
+
+### 4. 자동화된 CI/CD 파이프라인
+- **GitHub Actions**: 코드가 푸시될 때마다 유닛 테스트와 Docker 빌드 검증이 자동으로 수행됩니다. 이는 배포 전 잠재적인 문제를 즉시 발견하고 해결할 수 있게 해주는 **DevOps의 핵심**입니다.
+
+---
+
+## 🛠 기술 스택
+
+| 분류 | 기술 |
+| :--- | :--- |
+| **Frontend** | React, TypeScript, Vite, CSS Modules, Leaflet (Map), Lucide React (Icons) |
+| **Backend** | Node.js, Express, TypeScript |
+| **Database** | PostgreSQL, Prisma ORM |
+| **DevOps** | Docker, Docker Compose, Nginx, GitHub Actions, AWS EC2 |
+| **Testing** | Jest, Supertest |
+
+---
+
+## 💻 설치 및 실행 방법
+
+이 프로젝트는 **Docker**를 기반으로 가장 쉽고 빠르게 실행할 수 있도록 설계되었습니다.
 
 ### 사전 요구 사항
+- Docker 및 Docker Compose 설치 필수
 
-- Node.js (v18 이상)
-- npm
-- Docker & Docker Compose (로컬 PostgreSQL 및 전체 스택 실행용)
+### 1. 프로젝트 클론
+```bash
+git clone https://github.com/hygeetogether/karavan-final.git
+cd karavan-final
+```
 
-### 설치 및 실행 방법
-
-#### 옵션 1: Docker를 이용한 로컬 개발 (권장)
-
-1.  **저장소 클론 (Clone)**
-    ```bash
-    git clone <repository-url>
-    cd karaban
-    ```
-
-2.  **PostgreSQL 데이터베이스 실행**
-    ```bash
-    docker-compose up db -d
-    ```
-
-3.  **백엔드 설정**
-    ```bash
-    # 의존성 설치
-    npm install
-
-    # 데이터베이스 초기화 (마이그레이션)
-    npx prisma migrate dev --name init
-    npx prisma generate
-    npm run seed # 선택 사항: 더미 데이터 주입
-
-    # 백엔드 서버 시작
-    npm run dev
-    ```
-    백엔드는 `http://localhost:3001`에서 실행됩니다.
-
-4.  **프론트엔드 설정**
-    ```bash
-    cd frontend
-
-    # 의존성 설치
-    npm install
-
-    # 프론트엔드 서버 시작
-    npm run dev
-    ```
-    프론트엔드는 `http://localhost:5173`에서 실행됩니다.
-
-#### 옵션 2: 전체 Docker 실행 (Full Docker Setup)
-
-프론트엔드, 백엔드, 데이터베이스를 한 번에 실행합니다.
+### 2. 전체 서비스 실행 (권장)
+단 한 줄의 명령어로 프론트엔드, 백엔드, 데이터베이스를 모두 실행합니다.
 
 ```bash
-# 모든 서비스 시작
 docker-compose up -d --build
+```
 
-# 마이그레이션 및 시드 데이터 적용 (별도 터미널에서 실행)
+### 3. 데이터베이스 설정
+최초 실행 시 데이터베이스 스키마 적용이 필요합니다.
+
+```bash
+# 마이그레이션 및 초기 데이터 주입
 docker-compose exec backend npx prisma migrate deploy
 docker-compose exec backend npm run seed
 ```
 
-- **접속 주소**:
-    - 프론트엔드: `http://localhost`
-    - 백엔드 API: `http://localhost:3001`
+### 4. 접속 확인
+- **프론트엔드**: `http://localhost`
+- **백엔드 API**: `http://localhost:3001`
 
-## 배포 (Deployment)
+---
 
-### AWS EC2 배포 (Docker 사용 - 권장)
+## 🌐 배포 가이드
 
-Docker를 사용하여 AWS EC2에 프로덕션 환경을 배포하려면 상세 가이드인 [DEPLOYMENT.md](./DEPLOYMENT.md)를 참고하세요. 이 방식은 서버에 대한 완전한 제어권을 제공하며 가장 권장되는 방식입니다.
+### AWS EC2 배포 (Docker)
+실제 운영 환경(AWS EC2)에 배포하는 방법은 [DEPLOYMENT.md](./DEPLOYMENT.md) 파일에 상세하게 기술되어 있습니다. Docker를 활용하여 로컬 환경과 동일한 안정성을 보장합니다.
 
-### Render 배포 (클라우드 플랫폼)
+---
 
-서버 관리 없이 빠르게 클라우드에 배포하려면 [RENDER_SETUP.md](./RENDER_SETUP.md)를 참고하세요.
+## 📂 프로젝트 구조
 
-## 프로젝트 구조
-
-- `src/`: 백엔드 소스 코드 (Controllers, Services, Repositories, Models)
-- `frontend/`: 프론트엔드 React 애플리케이션
-- `prisma/`: 데이터베이스 스키마 및 마이그레이션
-- `tests/`: 백엔드 유닛 테스트
-- `render.yaml`: Render 배포 설정
-- `docker-compose.yml`: 로컬 개발 및 배포를 위한 Docker 설정
-
-## API 문서
-
-- `GET /health`: 헬스 체크(Health check) 엔드포인트
-- `GET /api/caravans`: 카라반 목록 조회 (필터링 지원)
-- `GET /api/caravans/:id`: 카라반 상세 정보 조회
-- `POST /api/reservations`: 예약 생성
-- `POST /api/payments`: 결제 처리
-- `POST /api/reviews`: 리뷰 작성
-
-## 환경 변수 (Environment Variables)
-
-필요한 모든 환경 변수는 `.env.example` 파일에 정의되어 있습니다.
-
-**로컬 개발 시:**
-```bash
-cp .env.example .env
-# .env 파일을 열어 로컬 설정에 맞게 수정하세요.
+```
+karavan-final/
+├── frontend/           # React 프론트엔드 애플리케이션
+│   ├── src/
+│   └── Dockerfile      # 프론트엔드 프로덕션 빌드 설정 (Nginx 포함)
+├── src/                # 백엔드 소스 코드
+│   ├── controllers/    # 요청 처리 컨트롤러
+│   ├── services/       # 비즈니스 로직
+│   ├── repositories/   # 데이터베이스 접근 계층
+│   └── models/         # 데이터 모델 타입 정의
+├── prisma/             # DB 스키마 및 마이그레이션
+├── tests/              # 백엔드 유닛 테스트
+├── .github/workflows/  # CI/CD 파이프라인 설정
+├── docker-compose.yml  # 전체 스택 오케스트레이션 설정
+└── DEPLOYMENT.md       # 상세 배포 가이드
 ```
 
-## 테스트 (Testing)
+---
 
-```bash
-# 백엔드 테스트 실행
-npm test
-
-# 커버리지와 함께 테스트 실행
-npm test -- --coverage
-```
-
-## 라이선스
-
-MIT
+**Karavan**과 함께라면, 당신의 다음 모험은 이미 시작되었습니다. 🚐✨
