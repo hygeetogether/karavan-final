@@ -1,50 +1,52 @@
-# CaravanShare Walkthrough
+# CaravanShare 프로젝트 워크스루 (Walkthrough)
 
-## Overview
-CaravanShare is a fully functional MVP for a peer-to-peer caravan sharing platform. This document outlines the implemented features and how to verify them.
+## 개요
+CaravanShare는 P2P 카라반 공유 플랫폼의 기능을 보여주는 완전한 MVP(Minimum Viable Product)입니다. 이 문서는 구현된 주요 기능과 이를 검증하는 방법을 설명합니다.
 
-## Implemented Features
+## 구현된 기능
 
-### 1. User Management
-- **Guest & Host Roles**: Users can sign up and identify as either a Guest or a Host.
-- **Mock Login**: Simple login flow for demonstration purposes.
+### 1. 사용자 관리 (User Management)
+- **게스트 및 호스트 역할**: 사용자는 가입 시 게스트(Guest) 또는 호스트(Host) 역할을 선택할 수 있습니다.
+- **모의 로그인**: 시연을 위한 간편 로그인 흐름이 구현되어 있습니다.
 
-### 2. Caravan Discovery
-- **Listing Page**: Browse all available caravans.
-- **Search & Filter**: Filter caravans by **Location** and **Price Range**.
-- **Map View**: Toggle between list view and an interactive map (Leaflet) to see caravan locations.
+### 2. 카라반 탐색 (Caravan Discovery)
+- **목록 페이지**: 등록된 모든 카라반을 둘러볼 수 있습니다.
+- **검색 및 필터**: **위치**와 **가격 범위**로 카라반을 필터링할 수 있습니다.
+- **지도 보기**: 목록 보기와 대화형 지도(Leaflet) 보기 간 전환이 가능하여 카라반의 위치를 직관적으로 확인할 수 있습니다.
 
-### 3. Reservation Flow
-- **Detail Page**: View caravan photos, amenities, and host information.
-- **Booking**: Select dates to calculate total price and proceed to reservation.
-- **Validation**: Prevents booking for invalid dates or by non-logged-in users.
+### 3. 예약 프로세스 (Reservation Flow)
+- **상세 페이지**: 카라반의 사진, 편의시설, 호스트 정보를 확인할 수 있습니다.
+- **예약하기**: 날짜를 선택하면 총 금액이 계산되며 예약 절차로 진행됩니다.
+- **유효성 검사**: 유효하지 않은 날짜나 비로그인 사용자의 예약을 방지합니다.
 
-### 4. Payments
-- **Mock Payment**: Secure-looking payment form to confirm reservations.
-- **Confirmation**: Updates reservation status to `CONFIRMED` upon successful payment.
+### 4. 결제 (Payments)
+- **모의 결제**: 예약을 확정하기 위한 안전한 느낌의 결제 폼을 제공합니다.
+- **예약 확정**: 결제가 성공하면 예약 상태가 `CONFIRMED`(확정)로 업데이트됩니다.
 
-### 5. Reviews
-- **Review System**: Guests can leave star ratings and comments for caravans.
-- **Display**: Average rating and review count are displayed on listing and detail pages.
+### 5. 리뷰 시스템 (Reviews)
+- **리뷰 작성**: 게스트는 이용한 카라반에 대해 별점과 코멘트를 남길 수 있습니다.
+- **표시**: 목록 및 상세 페이지에 평균 평점과 리뷰 수가 표시됩니다.
 
-## Technical Highlights
+## 기술적 특징
 
-- **Backend**: Node.js, Express, TypeScript, Prisma ORM.
-- **Frontend**: React, TypeScript, Vite, CSS Modules, Leaflet.
-- **Database**: PostgreSQL (configured in Docker/Prisma).
-- **Deployment**: Dockerized (Frontend + Backend + DB) with Nginx reverse proxy.
-- **CI/CD**: GitHub Actions workflow for automated testing.
+- **백엔드**: Node.js, Express, TypeScript, Prisma ORM.
+- **프론트엔드**: React, TypeScript, Vite, CSS Modules, Leaflet.
+- **데이터베이스**: PostgreSQL (Docker/Prisma 설정 완료).
+- **배포**: Dockerized (Frontend + Backend + DB) 및 Nginx 리버스 프록시.
+- **CI/CD**: GitHub Actions를 통한 자동화된 테스트 및 빌드 검증.
 
-## Verification Steps
+## 검증 단계 (Verification Steps)
 
-1.  **Run the Stack**:
+1.  **스택 실행**:
     ```bash
-    ./deploy.sh
+    docker-compose up -d --build
     ```
-2.  **Access the App**: Open `http://localhost` (or your server IP).
-3.  **Test the Flow**:
-    - Search for "Lake" in the location bar.
-    - Switch to Map view to see markers.
-    - Click a caravan, select dates, and reserve.
-    - Complete the mock payment.
-    - Verify the trip appears in "My Trips".
+
+2.  **앱 접속**: 브라우저에서 `http://localhost` (또는 서버 IP)로 접속합니다.
+
+3.  **기능 테스트 시나리오**:
+    - **검색**: 위치 검색창에 "Lake" 등을 입력하여 필터링을 확인합니다.
+    - **지도**: 지도 보기(Map View)로 전환하여 마커를 확인합니다.
+    - **예약**: 카라반을 클릭하고, 날짜를 선택한 뒤 예약 버튼을 누릅니다.
+    - **결제**: 모의 결제 폼에서 결제를 완료합니다.
+    - **확인**: "My Trips" 페이지에서 예약된 내역을 확인합니다.
