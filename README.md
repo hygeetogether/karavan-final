@@ -13,7 +13,7 @@
 | :---: | :---: | :---: |
 | ![Landing Page](./docs/images/landing_page.png) | ![Listing Page](./docs/images/listing_page.png) | ![Detail Page](./docs/images/detail_page.png) |
 
-| 지도 검색 (Map Search) | 결제 시스템 (Payment) | |
+| 지도 검색 & 앱 연동 (Map & Navigation) | 결제 시스템 (Payment) | |
 | :---: | :---: | :---: |
 | ![Map Interface](./docs/images/map_interface.png) | ![Payment Checkout](./docs/images/payment_checkout.png) | |
 
