@@ -72,7 +72,33 @@ Karavan은 사용자의 편의를 최우선으로 고려한 기능들을 제공�
 
 ---
 
-## 🚀 Technical Differentiators (기술적 차별화)
+## � Detailed Feature Workflows (기능 상세 작동 방식)
+
+### 1. 지도 기반 탐색 및 길찾기 연동 (Map Integration)
+Karavan은 **Leaflet.js**와 **OpenStreetMap**을 활용하여 전 세계 어디서나 사용 가능한 지도 서비스를 제공합니다.
+
+-   **동적 클러스터링**: 수많은 카라반 핀이 지도에 표시될 때, 성능 저하 없이 부드럽게 렌더링되도록 최적화되었습니다.
+-   **양방향 인터랙션**: 지도의 핀을 클릭하면 하단에 요약 카드가 뜨고, 리스트의 카드를 클릭하면 지도가 해당 위치로 이동합니다.
+-   **외부 앱 연동**: 상세 페이지의 **'길찾기(Get Directions)'** 버튼을 클릭하면, 사용자의 디바이스 환경을 감지하여 **네이버 지도, 카카오맵, 또는 Google Maps** 앱을 자동으로 실행하고 목적지를 설정합니다.
+
+### 2. 글로벌 결제 시스템 (Global Payment Gateway)
+국내외 사용자를 모두 포용하기 위해 **이원화된 결제 프로세스**를 설계했습니다.
+
+-   **International Cards**: Visa, Mastercard 등 해외 카드를 위한 결제 흐름을 제공합니다. (Stripe 스타일 UI)
+-   **Local Payment**: 한국 사용자를 위해 **카카오페이, 네이버페이** 등 간편 결제 옵션을 제공합니다.
+-   **Mock Payment Engine**: 현재 데모 버전에서는 실제 과금 없이 결제 성공/실패 시나리오를 테스트할 수 있는 **자체 개발 Mock 엔진**이 탑재되어 있어, 개발 및 시연 단계에서 안전하게 기능을 검증할 수 있습니다.
+
+### 3. 예약 및 승인 프로세스 (Reservation Flow)
+예약 시스템은 **상태 머신(State Machine)** 기반으로 견고하게 설계되었습니다.
+
+1.  **Request (요청)**: 게스트가 날짜를 선택하고 결제를 완료하면 `PENDING` 상태로 예약이 생성됩니다.
+2.  **Validation (검증)**: 백엔드에서 해당 날짜의 중복 예약 여부, 가격 변동 등을 실시간으로 재검증합니다.
+3.  **Confirmation (확정)**: 검증이 통과되면 예약 상태가 `CONFIRMED`로 변경되고, 호스트와 게스트에게 알림이 전송됩니다.
+4.  **Review (리뷰)**: 체크아웃 날짜가 지나면 게스트는 리뷰를 작성할 수 있는 권한을 얻게 됩니다.
+
+---
+
+## �🚀 Technical Differentiators (기술적 차별화)
 
 ### 1. 견고한 아키텍처 (Robust Architecture)
 - **Layered Pattern**: `Controller` - `Service` - `Repository` 계층 분리를 통해 비즈니스 로직의 응집도를 높이고 결합도를 낮췄습니다.
