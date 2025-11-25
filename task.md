@@ -18,5 +18,5 @@
 - [x] Implement Map Integration (Frontend)
 ## Phase 2: Render Configuration
 - [x] Update Prisma schema for PostgreSQL (switched to SQLite for local dev) with Prisma ORM
-- [x] Deploy to EC2 (Level 1) and add HTTPS (Level 2) - *Guide Updated*
-- [x] Add domain, CI/CD, DB, logging (Level 3) - *Ready for implementation*
+- [x] Deploy to EC2 (Level 1) and add HTTPS (Level 2) - *Guide & Config Complete*
+- [x] Add domain, CI/CD, DB, logging (Level 3) - *Workflow Implemented*
