@@ -7,7 +7,13 @@
 
 ---
 
-## 📖 목차
+## � Preview (미리보기)
+
+| 메인 화면 (Landing) | 목록 화면 (Listing) | 상세 화면 (Detail) |
+| :---: | :---: | :---: |
+| ![Landing Page](./docs/images/landing_page.png) | ![Listing Page](./docs/images/listing_page.png) | ![Detail Page](./docs/images/detail_page.png) |
+
+## �📖 목차
 
 1. [Why Karavan? (기획 배경 및 문제 해결)](#-why-karavan-기획-배경-및-문제-해결)
 2. [What We Learned (배운 점)](#-what-we-learned-배운-점)
