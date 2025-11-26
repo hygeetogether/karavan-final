@@ -14,6 +14,8 @@ export interface Caravan {
     longitude: number;
     address: string;
   };
+  nearbyFacilities?: { type: string; name: string; distance: string }[];
+  tags?: string[];
   status: CaravanStatus;
   dailyRate: number; // price per day in KRW
   createdAt: Date;

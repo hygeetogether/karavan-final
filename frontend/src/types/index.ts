@@ -14,4 +14,6 @@ export interface Caravan {
     };
     status: 'AVAILABLE' | 'BOOKED' | 'MAINTENANCE';
     dailyRate: number;
+    nearbyFacilities?: { type: string; name: string; distance: string }[];
+    tags?: string[];
 }

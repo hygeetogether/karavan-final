@@ -72,6 +72,41 @@ Karavan은 사용자의 편의를 최우선으로 고려한 기능들을 제공�
 
 ---
 
+## 🌟 New Features (v2.0)
+
+사용자의 피드백을 반영하여 사회적 가치를 창출하고, 더욱 개인화된 경험을 제공하는 새로운 기능들이 추가되었습니다.
+
+### 1. 🐾 Pet-First Travel (반려동물 전용 여행)
+
+단순히 "반려동물 동반 가능"을 넘어, 반려동물을 위한 시설이 완비된 카라반을 큐레이션합니다.
+
+![Pet First Feature](./docs/images/feature_pet_first.png)
+
+- **Special Tag**: `Pet-First` 태그가 부착된 카라반은 울타리, 펫 드라이룸 등 전용 시설을 갖추고 있습니다.
+- **Pet-Friendly Amenities**: 주변의 **동물 병원(24h Pet Hospital)**, **반려견 놀이터(Dog Park)** 등의 위치와 거리를 아이콘으로 직관적으로 제공하여 안심하고 여행할 수 있습니다.
+
+### 2. 🚑 Disaster Relief Housing (재난 구호 하우징)
+
+국가적 재난이나 긴급 상황 발생 시, 유휴 카라반을 임시 거처로 활용할 수 있도록 지원합니다.
+
+![Disaster Relief Feature](./docs/images/feature_disaster_relief.png)
+
+- **Emergency Tag**: `Disaster Relief Available` 태그는 즉시 입주 가능하며, 구호 활동을 위한 최소한의 설비가 갖춰져 있음을 의미합니다.
+- **Medical Access**: 긴급 상황에 대비해 가장 가까운 **종합 병원(Medical Center)**, **약국(Pharmacy)** 정보를 최우선으로 표시합니다.
+
+### 3. 📍 Nearby Amenities Integration (주변 편의시설 연동)
+
+여행의 질을 높여주는 주변 편의시설 정보를 상세 페이지에서 바로 확인할 수 있습니다.
+
+- **직관적인 아이콘 시스템**:
+    - 🏥 **병원 (Hospital)**: 응급 상황 대비
+    - 🛒 **마트/편의점 (Mart)**: 식료품 및 생필품 구매
+    - 🌳 **공원 (Park)**: 산책 및 휴식 공간
+    - ☕ **카페 (Cafe)**: 여유로운 휴식
+- **거리 정보 (Distance)**: 현재 카라반 위치를 기준으로 직선/도보 거리를 계산하여 표시합니다.
+
+---
+
 ## � Detailed Feature Workflows (기능 상세 작동 방식)
 
 ### 1. 지도 기반 탐색 및 길찾기 연동 (Map Integration)

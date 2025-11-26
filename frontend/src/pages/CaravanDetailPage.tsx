@@ -147,6 +147,48 @@ const CaravanDetailPage: React.FC = () => {
                             </div>
                         </div>
 
+                        {caravan.tags && caravan.tags.length > 0 && (
+                            <div className="tags-section" style={{ marginTop: '2rem' }}>
+                                <h3>Special Features</h3>
+                                <div style={{ display: 'flex', gap: '0.5rem', flexWrap: 'wrap' }}>
+                                    {caravan.tags.map((tag, idx) => (
+                                        <span key={idx} style={{
+                                            backgroundColor: '#e0f2fe',
+                                            color: '#0284c7',
+                                            padding: '0.5rem 1rem',
+                                            borderRadius: '20px',
+                                            fontSize: '0.9rem',
+                                            fontWeight: '500'
+                                        }}>
+                                            {tag}
+                                        </span>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
+                        {caravan.nearbyFacilities && caravan.nearbyFacilities.length > 0 && (
+                            <div className="facilities-section" style={{ marginTop: '2rem' }}>
+                                <h3>Nearby Facilities</h3>
+                                <div className="facilities-list" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '1rem' }}>
+                                    {caravan.nearbyFacilities.map((facility, idx) => (
+                                        <div key={idx} style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', padding: '0.75rem', border: '1px solid #eee', borderRadius: '8px' }}>
+                                            <div style={{ color: '#666' }}>
+                                                {facility.type.toLowerCase().includes('hospital') ? <span role="img" aria-label="hospital">🏥</span> :
+                                                    facility.type.toLowerCase().includes('mart') ? <span role="img" aria-label="mart">🛒</span> :
+                                                        facility.type.toLowerCase().includes('park') ? <span role="img" aria-label="park">🌳</span> :
+                                                            <span role="img" aria-label="place">📍</span>}
+                                            </div>
+                                            <div>
+                                                <div style={{ fontWeight: '500' }}>{facility.name}</div>
+                                                <div style={{ fontSize: '0.85rem', color: '#888' }}>{facility.distance}</div>
+                                            </div>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        )}
+
                         <div className="description-section">
                             <h3>About this caravan</h3>
                             <p style={{ lineHeight: '1.6', color: 'var(--text-secondary)' }}>

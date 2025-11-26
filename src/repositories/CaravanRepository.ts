@@ -12,6 +12,8 @@ export class CaravanRepository {
         photos: caravan.photos as any,
         amenities: caravan.amenities as any,
         location: caravan.location as any,
+        nearbyFacilities: caravan.nearbyFacilities as any,
+        tags: caravan.tags as any,
         status: caravan.status,
         dailyRate: caravan.dailyRate,
         createdAt: caravan.createdAt,
@@ -28,6 +30,8 @@ export class CaravanRepository {
       amenities: caravan.amenities as string[],
       photos: caravan.photos as string[],
       location: caravan.location as any,
+      nearbyFacilities: caravan.nearbyFacilities as any,
+      tags: caravan.tags as string[],
       status: caravan.status as CaravanStatus
     };
   }
@@ -52,6 +56,8 @@ export class CaravanRepository {
       amenities: c.amenities as string[],
       photos: c.photos as string[],
       location: c.location as any,
+      nearbyFacilities: c.nearbyFacilities as any,
+      tags: c.tags as string[],
       status: c.status as CaravanStatus
     }));
 
@@ -74,6 +80,8 @@ export class CaravanRepository {
       amenities: c.amenities as string[],
       photos: c.photos as string[],
       location: c.location as any,
+      nearbyFacilities: c.nearbyFacilities as any,
+      tags: c.tags as string[],
       status: c.status as CaravanStatus
     }));
   }

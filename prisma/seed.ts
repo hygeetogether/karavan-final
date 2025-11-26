@@ -59,6 +59,11 @@ async function main() {
                 latitude: 37.8813,
                 longitude: 127.7298
             },
+            nearbyFacilities: [
+                { type: 'Mart', name: 'Hanaro Mart', distance: '2km' },
+                { type: 'Cafe', name: 'Lake Side Cafe', distance: '500m' }
+            ],
+            tags: ['Workcation', 'Lake View'],
         },
     });
 
@@ -79,6 +84,11 @@ async function main() {
                 latitude: 37.8315,
                 longitude: 127.5106
             },
+            nearbyFacilities: [
+                { type: 'Hospital', name: 'Pet Care Center', distance: '3km' },
+                { type: 'Park', name: 'Gapyeong Dog Park', distance: '1km' }
+            ],
+            tags: ['Pet-First', 'Cozy'],
         },
     });
 
@@ -99,6 +109,11 @@ async function main() {
                 latitude: 37.4876,
                 longitude: 127.4897
             },
+            nearbyFacilities: [
+                { type: 'Hospital', name: 'Yangpyeong Medical Center', distance: '1km' },
+                { type: 'Pharmacy', name: 'Good Health Pharmacy', distance: '200m' }
+            ],
+            tags: ['Disaster Relief Available', 'Luxury'],
         },
     });
 

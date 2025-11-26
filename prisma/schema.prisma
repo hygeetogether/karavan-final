@@ -61,6 +61,8 @@ model Caravan {
   amenities   Json          // String[]
   photos      Json          // String[]
   location    Json          // { latitude: number, longitude: number, address: string }
+  nearbyFacilities Json?    // [{ type: string, name: string, distance: string }]
+  tags        Json?         // String[] e.g. ["Pet-First", "Disaster Relief"]
   status      CaravanStatus
   dailyRate   Float
   createdAt   DateTime      @default(now())
